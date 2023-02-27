@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('gender')->default('M')->comment('M for Male, F Female');;
+            $table->string('gender')->default('M')->comment('M for Male, F Female');
             $table->string('tel');
             $table->string('username');
             $table->string('email')->unique();

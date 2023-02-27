@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->date_time_set('hour');
+            $table->date('hour');
             $table->string('fullName');
             $table->string('email');
             $table->string('service');
             $table->string('reason');
+            $table->string('status')->default('DND')->comment('DND for Denied, APT for Accept and PPD for Postponed');
             $table->timestamps();
         });
     }
