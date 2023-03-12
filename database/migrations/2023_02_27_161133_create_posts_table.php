@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->string('image');
+            $table->string('image')->nullable();//'image' => 'mimes:jpg,bmp,png'
             $table->timestamps();
 
             $table->bigInteger('category_id');

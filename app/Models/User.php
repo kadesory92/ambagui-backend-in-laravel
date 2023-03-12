@@ -20,13 +20,10 @@ class User extends Authenticatable
     protected $fillable = [
         'firstname',
         'lastname',
-        'gender',
-        'tel',
         'username',
         'email',
         'password',
-        'photo',
-        'filePassport',
+        'passportNum',
         'utype'
     ];
 
@@ -48,4 +45,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function folder(): BelongTo
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    public function requests(): HasToMany
+    {
+        return $this->hasToMany(Requests::class);
+    }
+
 }

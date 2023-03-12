@@ -17,16 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
+            $table->string('passportNum')->unique();
             $table->string('gender')->default('M')->comment('M for Male, F Female');
-            $table->string('tel');
             $table->string('username');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('photo');
-            $table->string('filePassport');
-            $table->rememberToken();
             $table->string('utype')->default('USR')->comment('ADM for Admin, PS for Personnal and USR for User');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

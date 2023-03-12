@@ -8,4 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Folder extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'photo',
+        'filePassport',
+        'gender',
+        'residenceStatus',
+        'university',
+        'city',
+        'address',
+        'phone',
+        'profession',
+        'job',
+        'compagny',
+        'civilStatus',
+        'nbChildren',
+
+        'firstNameReferent',
+        'lastNameReferent',
+        'emailReferent',
+        'phoneReferent',
+        'familyConnection',
+    ];
+
 }

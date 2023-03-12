@@ -15,9 +15,9 @@ class Post extends Model
             'image',
     ];
 
-    public function category(): BelongTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(category::class);
+        return $this->belongsTo(Category::class);
     }
 
 }
