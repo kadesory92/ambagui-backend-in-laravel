@@ -20,11 +20,18 @@ use App\Http\Controllers\API\PostController;
 Route::post('/register',[AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/add-category', [CategoryController::class, 'store']);
-Route::get('/categories', [CategoryController::class, 'index']);
+Route::middleware(['auth', 'user-access:ADM'])->group(function () {
+  
+    Route::post('/add-category', [CategoryController::class, 'store']);
+    Route::get('/categories', [CategoryController::class, 'index']);
 
-Route::post('/add-post', [PostController::class, 'store']);
-Route::get('/posts', [PostController::class, 'index']);
+    Route::post('/add-post', [PostController::class, 'store']);
+    Route::get('/posts', [PostController::class, 'index']);
+});
+
+Route::middleware(['auth', 'user-access:USR'])->group(function () {
+
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
