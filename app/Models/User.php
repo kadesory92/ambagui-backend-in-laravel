@@ -47,12 +47,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected function utype(): Attribute
+    /* protected function utype(): Attribute
     {
         return new Attribute(
             get: fn ($value) =>  ["USR", "PS", "ADM"][$value],
         );
-    }
+    } */
 
     public function folder(): BelongTo
     {

@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('service');
             $table->string('reason');
-            $table->string('status')->default('DND')->comment('DND for Denied, APT for Accept and PPD for Postponed');
+            $table->string('status')->default('APT')->comment('DND for Denied, 
+                APT for Accept and PPD for Postponed');
             $table->timestamps();
         });
     }

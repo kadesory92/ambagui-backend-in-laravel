@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\FolderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,14 @@ use App\Http\Controllers\API\PostController;
 |
 */
 
-Route::post('/register',[AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+/* Route::post('/register',[AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']); */
+
+Route::controller(AuthController::class)->group(function(){
+    Route::post('register', 'register');
+    Route::post('login', 'login');
+});
+
 
 Route::middleware(['auth', 'user-access:ADM'])->group(function () {
   
@@ -30,9 +37,18 @@ Route::middleware(['auth', 'user-access:ADM'])->group(function () {
 });
 
 Route::middleware(['auth', 'user-access:USR'])->group(function () {
-
+    //Route::get('/logout', [AuthController::class, 'logout']);
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/add-folder', [FolderController::class, 'create']);
+    Route::post('/make-request', [RequestsController::class, 'create']);
+});
+
+Route::post('/make-appointment', [AppointmentController::class, 'create']);
+
+/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+}); */

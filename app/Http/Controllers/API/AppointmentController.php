@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Appointment;
 
 class AppointmentController extends Controller
 {
@@ -27,6 +28,40 @@ class AppointmentController extends Controller
      */
     public function create()
     {
+        $validations=Validator::make($request->all(), [
+            'date' => 'required',
+            'hour' => 'required',
+            'fullName' => 'required|string',
+            'email' => 'required|string',
+            'service' => 'required|string',
+            'reason' => 'required|string',
+        ]);
+
+        if($validations->fails()){
+            $errors=$validations->errors();
+
+            return response()->json([
+                'errors'=>$errors,
+                'status'=>401
+            ]);
+        }
+
+        if($validations->passes()){
+            $appointment=Appointment::create([
+                'date'=>$request->date,
+                'hour'=>$request->hour,
+                'fullName'=>$request->fullName,
+                'email'=>$request->email,
+                'service'=>$request->service,
+                'reason'=>$request->reason,
+            ]);
+
+            return response()->json([
+                'appointment'=>$appointment,
+                'status'=> 200
+            ]);
+
+        }
         //
     }
 

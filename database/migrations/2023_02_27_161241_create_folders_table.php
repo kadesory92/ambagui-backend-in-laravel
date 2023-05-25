@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -18,7 +19,8 @@ return new class extends Migration
             $table->string('photo');
             $table->string('filePassport');
             $table->string('gender')->default('M')->comment('M for Male, F Female');
-            $table->string('residenceStatus');
+            $table->string('residenceStatus')->default('STD')->comment('STD for Student, 
+                DPT for Diplomat, MLR for Military,TRT for Tourist, WRK for Worker');;
             $table->string('university')->nullable();
             $table->string('city');
             $table->string('address');
@@ -37,7 +39,7 @@ return new class extends Migration
             $table->string('familyConnection')->nullable();
             $table->timestamps();
 
-            $table->bigInteger('user_id');
+            $table->foreignIdFor(User::class);
         });
     }
 

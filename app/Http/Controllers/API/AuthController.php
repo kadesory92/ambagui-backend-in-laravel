@@ -4,51 +4,69 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $registerRequest)
     {
-        $validations = Validator::make($request->all(), [
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'passportNum' => 'required|unique:users|max:255',
-            'username' => 'required|unique:users|max:255',
-            'email' => 'required|unique:users|max:255',
-            'password' => 'required|string|min:8',
-        ]);
-
-        if($validations->fails()){
-            $errors=$validations->errors();
-
-            return response()->json([
-                'errors'=>$errors,
-                'status'=>401
-            ]);
-        }
-
-        if($validations->passes()){
+        try {
+            
             $user=User::create([
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'passportNum' => $request->passportNum,
-                //'gender' => $gender,
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                //'utype' => $utype
+                'firstname'=>$registerRequest->input('firstname'),
+                'lastname'=>$registerRequest->input('lastname'),
+                'passportNum'=>$registerRequest->input('passportNum'),
+                'username'=>$registerRequest->input('username'),
+                'email'=>$registerRequest->input('email'),
+                'password'=>Hash::make($registerRequest->input('password')),
+
             ]);
 
-            $token=$user->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken('user_token')->plainTextToken;
+
+            return response()->json([ 'user' => $user, 'token' => $token ], 200);
+
+        } catch (\Throwable $th) {
             return response()->json([
-                'token'=>$token,
-                'type'=>'bearer'
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }     
+    }
+
+    public function login(LoginRequest $loginRequest)
+    {
+        try {
+            $user = User::where('email', $loginRequest->email)->first();
+ 
+            if (! $user || ! Hash::check($loginRequest->password, $user->password)) {
+                return response()->json([
+                    'message'=>"Email ou de mot de passe incorrect!"
+                ]);
+            }
+
+            $token = $user->createToken('user_token')->plainTextToken;
+
+            return response()->json([
+                'user'=>$user,
+                'token'=>$token
             ]);
 
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
+    }
+
+    public function logout()
+    {
         
     }
     //
