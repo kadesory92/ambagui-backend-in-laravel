@@ -26,23 +26,23 @@ class FolderRequest extends FormRequest
         return [
             'photo'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'filePassport'=>'required|mimes:pdf, doc',
-            //'gender'=>'required|string',
+            //'gender'=>'string',
             //'residenceStatus'=>'string',
             'university'=>'string',
             'city'=>'required|string',
             'address'=>'required|string',
             'phone'=>'required|string',
-            //'profession'=>'string',
-            //'job'=>'string',
-            //'company'=>'string',
-            //'civilStatus'=>'string',
-            //'nbChildren'=>'numric',
+            'profession'=>'string',
+            'job'=>'string',
+            'company'=>'string',
+            'civilStatus'=>'string',
+            'nbChildren'=>'numric',
 
-            /* 'firstNameReferent'=>'string',
+            'firstNameReferent'=>'string',
             'lastNameReferent'=>'string',
             'emailReferent'=>'string',
             'phoneReferent'=>'string',
-            'familyConnection'=>'string', */
+            'familyConnection'=>'string',
             //
         ];
     }

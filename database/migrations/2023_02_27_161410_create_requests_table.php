@@ -17,7 +17,8 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->string('object');
-            $table->string('description');
+            $table->string('typeRequest');
+            $table->string('description')->nullable();
             $table->string('letter');
             $table->timestamps();
 

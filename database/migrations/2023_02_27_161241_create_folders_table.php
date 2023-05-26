@@ -20,12 +20,12 @@ return new class extends Migration
             $table->string('filePassport');
             $table->string('gender')->default('M')->comment('M for Male, F Female');
             $table->string('residenceStatus')->default('STD')->comment('STD for Student, 
-                DPT for Diplomat, MLR for Military,TRT for Tourist, WRK for Worker');;
+                DPT for Diplomat, MLR for Military,TRT for Tourist, WRK for Worker');
             $table->string('university')->nullable();
             $table->string('city');
             $table->string('address');
             $table->string('phone');
-            $table->string('profession');
+            $table->string('profession')->nullable();
             $table->string('job')->nullable();
             $table->string('company')->nullable();
 

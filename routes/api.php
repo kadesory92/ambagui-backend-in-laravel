@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\FolderController;
+use App\Http\Controllers\API\RequestsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::controller(AuthController::class)->group(function(){
 });
 
 
-Route::middleware(['auth', 'user-access:ADM'])->group(function () {
+Route::middleware(['auth:sanctum', 'user-access:ADM'])->group(function () {
   
     Route::post('/add-category', [CategoryController::class, 'store']);
     Route::get('/categories', [CategoryController::class, 'index']);
@@ -36,7 +37,7 @@ Route::middleware(['auth', 'user-access:ADM'])->group(function () {
     Route::get('/posts', [PostController::class, 'index']);
 });
 
-Route::middleware(['auth', 'user-access:USR'])->group(function () {
+Route::middleware(['auth:sanctum', 'user-access:USR'])->group(function () {
     //Route::get('/logout', [AuthController::class, 'logout']);
 });
 
@@ -44,7 +45,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     Route::post('/add-folder', [FolderController::class, 'create']);
-    Route::post('/make-request', [RequestsController::class, 'create']);
+    Route::get('/folder/user', [FolderController::class, 'folderByUser']);
+
+    Route::post('/make-requests', [RequestsController::class, 'create']);
 });
 
 Route::post('/make-appointment', [AppointmentController::class, 'create']);

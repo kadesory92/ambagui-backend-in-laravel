@@ -24,7 +24,10 @@ class RequestsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'object'=>'required|string',
+            'typeRequest'=>'required|string',
+            'description'=>'string',
+            'letter'=>'required|mimes:pdf, doc'
         ];
     }
 }

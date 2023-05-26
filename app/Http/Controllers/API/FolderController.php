@@ -58,5 +58,31 @@ class FolderController extends Controller
             ]);
         }
     }
+
+    public function folderByUser()
+    {
+        try {
+            $user_id=Auth::user()->id;
+            $folder=Folder::where('user_id',$user_id)->firstOrFail();
+
+            if($folder===''){
+                return response()->json([
+                    'message'=>"Cet utilisateur n'a pas de dossier",
+                    'status'=>200
+                ]);
+            }else{
+                return response()->json([
+                    'folder'=>$folder,
+                    'status'=>200
+                ]);
+            }
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'error'=>$e->getMessage(),
+                'message'=>"Problème rencontré pour la recupération des données"
+            ]);
+        }
+    }
     //
 }
